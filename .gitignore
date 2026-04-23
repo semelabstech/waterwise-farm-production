@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+.env
+data/
+!data/crops/
+!data/crops/**
+*.pyc
+.venv/
+venv/
+dist/
+.vercel/
+models/checkpoints/
