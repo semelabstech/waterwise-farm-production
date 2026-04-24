@@ -6,9 +6,6 @@ nixPkgs = ["python311", "python311Packages.pip", "nodejs_20"]
 [phases."node:setup"]
 nixPkgs = []
 
-[phases."node:setup"]
-nixPkgs = []
-
 [phases.install]
 cmds = [
     "python3 -m pip install -r requirements.txt",
