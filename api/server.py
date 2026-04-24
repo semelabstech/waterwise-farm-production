@@ -254,6 +254,10 @@ def get_region_data(region_key):
 
 # ── ENDPOINTS ──────────────────────────────────────────
 
+@app.get("/")
+def read_root():
+    return {"message": "WaterWiseFarm API is running. Access /docs for documentation.", "status": "online"}
+
 @app.get("/api/regions")
 def get_regions():
     """Return all available regions for the dropdown."""
