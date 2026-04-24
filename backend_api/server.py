@@ -120,6 +120,8 @@ def ensure_region(region: str, lat: float = None, lon: float = None, name: str =
             MOROCCO_REGIONS[region_key] = base_info
             
         return region_key
+    if not region:
+        return "souss_massa"
     return region
 
 
@@ -690,6 +692,9 @@ async def estimate_water_budget(request_data: dict = None):
 # ── STATIC FRONTEND SERVING ────────────────────────────
 
 FRONTEND_DIST = os.path.join(ROOT_DIR, "frontend", "dist")
+if not os.path.exists(FRONTEND_DIST):
+    FRONTEND_DIST = os.path.join(ROOT_DIR, "dist")
+
 ASSETS_DIR = os.path.join(FRONTEND_DIST, "assets")
 
 if os.path.exists(ASSETS_DIR):
