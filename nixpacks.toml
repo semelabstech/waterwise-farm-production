@@ -3,6 +3,9 @@ providers = ["python", "node"]
 [phases.setup]
 nixPkgs = ["python311", "nodejs_20"]
 
+[phases."node:setup"]
+nixPkgs = []
+
 [phases.install]
 cmds = [
     "pip install -r requirements.txt",
