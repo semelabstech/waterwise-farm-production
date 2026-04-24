@@ -11,7 +11,7 @@ import IoTPage from './pages/IoTPage'
 import CropPlannerPage from './pages/CropPlannerPage'
 import LandingPage from './pages/LandingPage'
 
-const API = '/api'
+const API = import.meta.env.VITE_API_URL || '/api'
 
 function App() {
   const [page, setPage] = useState('home')

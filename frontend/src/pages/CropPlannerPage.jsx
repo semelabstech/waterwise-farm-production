@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 })
 
-const API = '/api'
+const API = import.meta.env.VITE_API_URL || '/api'
 
 function LocationPicker({ position, setPosition }) {
   useMapEvents({
