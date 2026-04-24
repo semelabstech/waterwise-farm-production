@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "cd frontend && npm install && npm run build && cd .. && rm -rf dist && mv frontend/dist dist",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://waterwise-farm-production-production.up.railway.app/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
