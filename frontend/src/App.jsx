@@ -31,7 +31,21 @@ function App() {
   const [appMode, setAppMode] = useState('landing') // 'landing', 'farmer', 'engineer'
   const [userLocation, setUserLocation] = useState(null) // { lat, lon, name }
   
-  // ... (lines 34-47 unchanged)
+  // Load regions on mount
+  useEffect(() => {
+    fetch(`${API}/regions`)
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.regions) setRegions(data.regions)
+      })
+      .catch(err => console.error('Error fetching regions:', err))
+  }, [])
+
+  // Update clock every minute
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000)
+    return () => clearInterval(timer)
+  }, [])
 
   // Load all data when region changes OR mode changes
   useEffect(() => {
