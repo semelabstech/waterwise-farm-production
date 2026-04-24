@@ -1,12 +1,20 @@
 [providers]
-node = false
 python = true
+node = true
 
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = ["python311", "nodejs_20"]
 
 [phases.install]
-cmds = ["pip install -r requirements.txt"]
+cmds = [
+    "pip install -r requirements.txt",
+    "cd frontend && npm install"
+]
+
+[phases.build]
+cmds = [
+    "cd frontend && npm run build"
+]
 
 [start]
 cmd = "python backend_api/server.py"

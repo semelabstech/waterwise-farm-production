@@ -8,7 +8,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import threading
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -253,10 +254,6 @@ def get_region_data(region_key):
 
 
 # ── ENDPOINTS ──────────────────────────────────────────
-
-@app.get("/")
-def read_root():
-    return {"message": "WaterWiseFarm API is running. Access /docs for documentation.", "status": "online"}
 
 @app.get("/api/regions")
 def get_regions():
@@ -688,6 +685,22 @@ async def estimate_water_budget(request_data: dict = None):
 
     result = compute_multi_crop_budget(crops_list, area_ha, lat, lon, planting_month)
     return result
+
+
+# ── STATIC FRONTEND SERVING ────────────────────────────
+
+FRONTEND_DIST = os.path.join(ROOT_DIR, "frontend", "dist")
+ASSETS_DIR = os.path.join(FRONTEND_DIST, "assets")
+
+if os.path.exists(ASSETS_DIR):
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
+
+@app.get("/{catchall:path}")
+def serve_react_app(catchall: str):
+    index_file = os.path.join(FRONTEND_DIST, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file)
+    return JSONResponse(status_code=404, content={"detail": "Frontend build not found. Please run 'npm run build' inside 'frontend/'."})
 
 
 if __name__ == "__main__":
