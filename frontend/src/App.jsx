@@ -11,7 +11,7 @@ import IoTPage from './pages/IoTPage'
 import CropPlannerPage from './pages/CropPlannerPage'
 import LandingPage from './pages/LandingPage'
 
-const API = import.meta.env.VITE_API_URL || '/api'
+const API = import.meta.env.VITE_API_URL || 'https://waterwise-backend-mgz2.onrender.com/api'
 
 function App() {
   const [page, setPage] = useState('home')

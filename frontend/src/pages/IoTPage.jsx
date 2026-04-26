@@ -9,7 +9,8 @@ export default function IoTPage({ selectedRegion, appMode, userLocation }) {
     if (appMode === 'farmer' && userLocation) {
         queryParams = `region=custom&lat=${userLocation.lat}&lon=${userLocation.lon}`
     }
-    fetch(`/api/iot?${queryParams}`)
+const API = import.meta.env.VITE_API_URL || 'https://waterwise-backend-mgz2.onrender.com/api'
+    fetch(`${API}/iot?${queryParams}`)
       .then(res => res.json())
       .then(data => {
         setSensors(data.sensors || [])
