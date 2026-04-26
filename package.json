@@ -1,8 +1,5 @@
 {
   "name": "waterwise-farm-production-root",
   "version": "1.0.0",
-  "scripts": {
-    "build": "cd frontend && npm install && npm run build && cd .. && rm -rf dist && mv frontend/dist dist",
-    "start": "python3 backend_api/server.py"
-  }
+  "private": true
 }
