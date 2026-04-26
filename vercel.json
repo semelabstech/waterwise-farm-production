@@ -1,6 +1,10 @@
 {
   "framework": "vite",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install"
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "echo skip",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://waterwise-farm.onrender.com/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

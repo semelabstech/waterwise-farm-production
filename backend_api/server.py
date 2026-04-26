@@ -700,12 +700,30 @@ ASSETS_DIR = os.path.join(FRONTEND_DIST, "assets")
 if os.path.exists(ASSETS_DIR):
     app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
+@app.get("/favicon.svg")
+@app.get("/favicon.ico")
+def serve_favicon():
+    for name in ["favicon.svg", "favicon.ico", "vite.svg"]:
+        path = os.path.join(FRONTEND_DIST, name)
+        if os.path.exists(path):
+            return FileResponse(path)
+    return JSONResponse(status_code=404, content={"detail": "No favicon"})
+
 @app.get("/{catchall:path}")
 def serve_react_app(catchall: str):
+    # First, try to serve the exact file from dist (e.g. robots.txt, manifest.json)
+    file_path = os.path.join(FRONTEND_DIST, catchall)
+    if catchall and os.path.isfile(file_path):
+        return FileResponse(file_path)
+    # Otherwise, serve index.html for SPA routing
     index_file = os.path.join(FRONTEND_DIST, "index.html")
     if os.path.exists(index_file):
-        return FileResponse(index_file)
-    return JSONResponse(status_code=404, content={"detail": "Frontend build not found. Please run 'npm run build' inside 'frontend/'."})
+        return FileResponse(index_file, media_type="text/html")
+    return JSONResponse(status_code=200, content={
+        "status": "API running",
+        "message": "Frontend build not found. Run 'cd frontend && npm run build' to generate static files.",
+        "api_docs": "/docs"
+    })
 
 
 if __name__ == "__main__":
